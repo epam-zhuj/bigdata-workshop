@@ -39,7 +39,7 @@ public class WorkflowService {
     private final ExecutorService executorService;
 
     public WorkflowService() {
-        executorService = Executors.newFixedThreadPool(10);
+        executorService = Executors.newWorkStealingPool();
     }
 
     @PostConstruct
@@ -64,8 +64,11 @@ public class WorkflowService {
 
         for (WorkflowContainer.Workflow.Step step : workflow.getSteps()) {
             try {
-                Thread.sleep(step.invocationDelay);
+                if (step.invocationDelay > 0) {
+                    Thread.sleep(step.invocationDelay);
+                }
                 Optional<ServiceInstance<ServiceDetails>> stepService = serviceDiscovery.getServiceInstance(step.serviceName);
+                LOG.debug("Service '{}' discovered into '{}'", step.serviceName, stepService);
                 stepService.ifPresent(serviceInstance -> {
                     Map<String, String> requestPayload = new HashMap<>();
                     requestPayload.put("userId", userId);

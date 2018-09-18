@@ -1,0 +1,23 @@
+database-service​
+
+  "[database] {ts} | {userId} | {workflowId} | putSize: {szInKb}; returnSize: {szIbKb}" ​
+
+    -> resource.utilization.topic​
+
+​
+
+verification-service​
+
+  "[verification] {ts} | {userId} | {workflowId} | records verified: {number}" ​
+
+    -> resource.utilization.topic​
+
+​
+
+generator-service​
+
+  "[generator] ({ts1}, {ts2}) | {userId} | {workflowId} | avg cpu time: {avgCpuTime}" ​
+
+    -> resource.utilization.topic​
+
+ ​

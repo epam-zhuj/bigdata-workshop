@@ -38,7 +38,7 @@ public class DatabaseApplication implements ApplicationListener<ServletWebServer
             );
         }
         catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

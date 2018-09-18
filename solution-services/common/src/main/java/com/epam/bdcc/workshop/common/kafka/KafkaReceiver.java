@@ -12,7 +12,6 @@ import java.util.Collections;
 /**
  * Created by Dmitrii_Kober on 3/15/2018.
  */
-
 public class KafkaReceiver implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(KafkaReceiver.class);
@@ -41,7 +40,7 @@ public class KafkaReceiver implements Runnable {
     public void run() {
         consumer.subscribe(Collections.singletonList(topic));
         try {
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 ConsumerRecords<String, String> records = consumer.poll(100);
                 records.forEach(callback);
             }

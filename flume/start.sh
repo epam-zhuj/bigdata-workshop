@@ -1,1 +1,4 @@
-/usr/hdp/current/flume-server/bin/flume-ng agent --conf /usr/hdp/current/flume-server/conf --conf-file flume_agent.conf --name target_agent -Dflume.root.logger=INFO,console
+/usr/hdp/current/flume-server/bin/flume-ng agent \
+   --conf /usr/hdp/current/flume-server/conf \
+   --conf-file flume_agent.conf --name target_agent \
+   -Dflume.root.logger=INFO,console

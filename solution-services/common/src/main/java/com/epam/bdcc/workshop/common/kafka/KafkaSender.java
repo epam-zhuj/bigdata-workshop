@@ -14,34 +14,45 @@ import java.util.function.BiConsumer;
  */
 public class KafkaSender {
 
+
+    @FunctionalInterface
+    public interface OnSuccess {
+        void apply(RecordMetadata metadata, String payload);
+    }
+
+    @FunctionalInterface
+    public interface OnError {
+        void apply(String topic, String payload, Exception e);
+    }
+
     private static final Logger LOG = LoggerFactory.getLogger(KafkaSender.class);
 
-    private BiConsumer<RecordMetadata, Exception> callback;
-    private Producer<String, String> producer;
+    private final Producer<String, String> producer;
+    private final OnSuccess onSuccess;
+    private final OnError onError;
+
 
     public KafkaSender(KafkaClientFactory kafkaClientFactory) {
         this(
                 kafkaClientFactory,
-                (recordMetadata, e) -> {
-                    if (e != null) {
-                        LOG.error("An error occurred while sending a message to '{}' topic", recordMetadata.topic(), e);
-                    }
-                    else {
-                        LOG.info("Sent payload to '{}' partition of topic='{}'", recordMetadata.toString(), recordMetadata.topic());
-                    }
-                }
+                (metadata, payload) -> { LOG.info("Sent payload='{" + payload + "}' to topic='{" + metadata.topic() + "}'"); },
+                (topic, payload, e) -> { LOG.error("An error occurred while sending a message {" + payload + "} to topic='{" + topic + "}", e); }
         );
     }
 
-    public KafkaSender(KafkaClientFactory kafkaClientFactory, BiConsumer<RecordMetadata, Exception> callback) {
+    public KafkaSender(KafkaClientFactory kafkaClientFactory, OnSuccess onSuccess, OnError onError) {
         this.producer = kafkaClientFactory.producer();
-        this.callback = callback;
+        this.onSuccess = onSuccess;
+        this.onError = onError;
     }
 
     public void send(String topic, String payload) {
         producer.send(
                 new ProducerRecord<>(topic, UUID.randomUUID().toString(), payload),
-                (recordMetadata, e) -> LOG.info("Sent payload='{" + payload + "}' to topic='{" + topic + "}'")
+                (recordMetadata, e) -> {
+                    if (null != e) { onError.apply(topic, payload, e); }
+                    else { onSuccess.apply(recordMetadata, payload); }
+                }
         );
     }
 

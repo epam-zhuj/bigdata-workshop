@@ -20,6 +20,7 @@ import java.util.Map;
 @Service
 public class KafkaClientFactory {
 
+    @Value("${kafka.request-timeout.ms:10000}") private int requestTimeout;
     @Value("${kafka.factory.broker.servers}") private String brokerServers;
     @Value("${kafka.consumer.auto-offset-reset:earliest}") private String autoOffsetReset;
 
@@ -34,6 +35,9 @@ public class KafkaClientFactory {
     private Map<String, Object> consumerProps(String consumerGroup) {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, brokerServers);
+        props.put(ConsumerConfig.REQUEST_TIMEOUT_MS_CONFIG, requestTimeout);
+        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 3*requestTimeout/4);
+        props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 3*requestTimeout/4);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
@@ -46,6 +50,8 @@ public class KafkaClientFactory {
     private Map<String, Object> senderProps() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, brokerServers);
+        props.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, requestTimeout);
+        props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, requestTimeout);
         props.put(ProducerConfig.RETRIES_CONFIG, 0);
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
         props.put(ProducerConfig.LINGER_MS_CONFIG, 1);

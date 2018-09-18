@@ -38,7 +38,7 @@ public class VerificationApplication implements ApplicationListener<ServletWebSe
             );
         }
         catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

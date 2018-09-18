@@ -31,7 +31,7 @@ public class ZookeeperServiceDiscovery implements Closeable {
     @Value("${zookeeper.root.namespace}") private String zookeeperRootNamespace;
     @Value("${zookeeper.host}") private String zookeeperHost;
     private CuratorFramework curatorClient;
-    private ServiceDiscovery serviceDiscovery;
+    private ServiceDiscovery<ServiceDetails> serviceDiscovery;
 
     @PostConstruct
     private void init() throws Exception {
@@ -47,7 +47,7 @@ public class ZookeeperServiceDiscovery implements Closeable {
     }
 
     public Optional<ServiceInstance<ServiceDetails>> getServiceInstance(String serviceName) throws Exception {
-        return new ArrayList(serviceDiscovery.queryForInstances(serviceName)).stream().findAny();
+        return new ArrayList<>(serviceDiscovery.queryForInstances(serviceName)).stream().findAny();
     }
 
     public void registerService(String serviceHost, int servicePort, String serviceName, String serviceContext, String serviceDescription) throws Exception {
@@ -67,7 +67,8 @@ public class ZookeeperServiceDiscovery implements Closeable {
             curatorClient.close();
         }
         catch (IOException e) {
-            LOG.warn("Error while talking to ZooKeeper", e);
+            // just ignore, it's destroy-time execution
+            // LOG.warn("Error while talking to ZooKeeper", e);
         }
     }
 }

@@ -14,6 +14,7 @@ import static com.epam.bdcc.workshop.structurer.model.ServiceType.VERIFICATION;
  */
 class VerificationServiceKeyProducer {
 
+    // FORMAT: "[verification] {ts} | {userId} | {workflowId} | records verified: {number}" ​
     private static final Pattern PATTERN = Pattern.compile("\\[.+\\] .+ \\| .+ \\| (.+) \\| .+");
     private static final Logger LOG = LoggerFactory.getLogger(VerificationServiceKeyProducer.class);
 

@@ -23,7 +23,7 @@ public class DatabaseService {
 
     @Value("${service.name}") private String serviceName;
     @Value("${kafka.resource.utilization.info.topic}") private String resourceUtilizationInfoTopic;
-    @Autowired KafkaClientFactory kafkaClientFactory;
+    @Autowired private KafkaClientFactory kafkaClientFactory;
     private KafkaSender kafkaSender;
 
     @PostConstruct

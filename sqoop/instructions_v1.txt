@@ -1,6 +1,7 @@
-mysql -u root -p hadoop
-create database organizations
-use organizations
+mysql -p -u root (password = hadoop)
+
+create database organizations;
+use organizations;
 create table users(id int primary key, organization varchar(50), user varchar(100));
 insert into users values(1, 'EPAM', 'Dmitrii');
 insert into users values(2, 'EPAM', 'Olga');

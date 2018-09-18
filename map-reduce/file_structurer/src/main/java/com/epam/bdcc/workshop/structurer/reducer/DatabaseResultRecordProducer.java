@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  */
 class DatabaseResultRecordProducer extends AbstractRecordProducer {
 
+    // FORMAT: "[database] {ts} | {userId} | {workflowId} | putSize: {szInKb}; returnSize: {szIbKb}" ​
     private static final Pattern PATTERN = Pattern.compile("\\[.+\\] (.+) \\| (.+) \\| (.+) \\| putSize: (.+); returnSize: (.+)");
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseResultRecordProducer.class);
 

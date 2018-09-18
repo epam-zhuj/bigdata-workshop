@@ -38,7 +38,7 @@ public class GeneratorApplication implements ApplicationListener<ServletWebServe
             );
         }
         catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

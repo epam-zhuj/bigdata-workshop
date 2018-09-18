@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  */
 class GeneratorResultRecordProducer extends AbstractRecordProducer {
 
+    // FORMAT: "[generator] ({ts1}, {ts2}) | {userId} | {workflowId} | avg cpu time: {avgCpuTime}" ​
     private static final Pattern PATTERN = Pattern.compile("\\[.+\\] \\((.+), (.+)\\) \\| (.+) \\| (.+) \\| avg cpu time: (.+)");
     private static final Logger LOG = LoggerFactory.getLogger(GeneratorResultRecordProducer.class);
 

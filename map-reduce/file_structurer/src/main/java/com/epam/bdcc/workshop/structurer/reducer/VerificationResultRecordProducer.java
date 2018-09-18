@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  */
 class VerificationResultRecordProducer extends AbstractRecordProducer {
 
+    // FORMAT: "[verification] {ts} | {userId} | {workflowId} | records verified: {number}" ​
     private static final Pattern PATTERN = Pattern.compile("\\[.+\\] (.+) \\| (.+) \\| (.+) \\| records verified: (.+)");
     private static final Logger LOG = LoggerFactory.getLogger(VerificationResultRecordProducer.class);
 

@@ -1,0 +1,25 @@
+(1)
+shell (web): http://127.0.0.1:4200/ root:workshop (default=hadoop)
+shell (ssh): 127.0.0.1:2222
+
+(2)
+ambari-admin-password-reset - admin / workshop
+
+(3)
+Landing: http: http://127.0.0.1:8888/
+Ambari: http://127.0.0.1:8080/#/main/dashboard/metrics
+
+(4)
+Start kafka (ambari)
+
+(5)
+copy app jars (run it with java -jar)
+
+(6)
+/usr/hdp/current/kafka-broker/bin/kafka-console-consumer.sh --bootstrap-server 0.0.0.0:6667 --topic "resource.utilization.topic"
+/usr/hdp/current/kafka-broker/bin/kafka-console-consumer.sh --bootstrap-server 0.0.0.0:6667 --topic "gateway.user.activity.topic"
+
+(7)
+scp flume (config and script)
+
+(8)

@@ -14,6 +14,7 @@ import static com.epam.bdcc.workshop.structurer.model.ServiceType.DATABASE;
  */
 class DatabaseServiceKeyProducer {
 
+    // FORMAT: "[database] {ts} | {userId} | {workflowId} | putSize: {szInKb}; returnSize: {szIbKb}" ​
     private static Pattern PATTERN = Pattern.compile("\\[.+\\] .+ \\| .+ \\| (.+) \\| .+");
     private static Logger LOG = LoggerFactory.getLogger(DatabaseServiceKeyProducer.class);
 

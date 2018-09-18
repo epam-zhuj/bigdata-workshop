@@ -14,6 +14,7 @@ import static com.epam.bdcc.workshop.structurer.model.ServiceType.GENERATOR;
  */
 class GeneratorServiceKeyProducer {
 
+    // FORMAT: "[generator] ({ts1}, {ts2}) | {userId} | {workflowId} | avg cpu time: {avgCpuTime}" ​
     private static final Pattern PATTERN = Pattern.compile("\\[.+\\] \\(.+\\) \\| .+ \\| (.+) \\| .+");
     private static Logger LOG = LoggerFactory.getLogger(GeneratorServiceKeyProducer.class);
 

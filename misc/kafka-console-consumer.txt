@@ -1,1 +1,8 @@
+kafka-topics.sh --zookeeper localhost:2181 --list
+kafka-topics.sh --zookeeper localhost:2181 --create --replication-factor 1 --partitions 5 --topic "gateway.user.activity.topic"
+kafka-topics.sh --zookeeper localhost:2181 --create --replication-factor 1 --partitions 5 --topic "resource.utilization.topic"
+
+kafka-console-consumer.sh --zookeeper localhost:2181 --topic "gateway.user.activity.topic" --from-beginning
+kafka-console-consumer.sh --zookeeper localhost:2181 --topic "resource.utilization.topic" --from-beginning
+
 /usr/hdp/current/kafka-broker/bin/kafka-console-consumer.sh --zookeeper 0.0.0.0:2181 (-- broker-list 0.0.0.0:6667) --topic gateway.user.activity.topic --from-beginning
